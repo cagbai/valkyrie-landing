@@ -560,6 +560,7 @@
             align-items: stretch;
             margin-top: 80px;
             padding: 0 20px;
+            position: relative;
         }
 
         .step-card {
@@ -1073,6 +1074,142 @@
             opacity: 1;
         }
         
+        /* Transformation Flow Arrows */
+        
+        /* Arrow heads using pseudo elements */
+        .step-card:nth-child(1)::after,
+        .step-card:nth-child(2)::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -35px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid var(--primary-purple);
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            transform: translateY(-50%);
+            z-index: 11;
+            animation: arrowHeadPulse 2s ease-in-out infinite;
+        }
+        
+        .step-card:nth-child(1)::after {
+            animation-delay: 0.5s;
+        }
+        
+        .step-card:nth-child(2)::after {
+            animation-delay: 1s;
+        }
+        
+        @keyframes arrowPulse {
+            0%, 100% {
+                opacity: 0.6;
+                transform: translateY(-50%) scaleX(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) scaleX(1.1);
+            }
+        }
+        
+        @keyframes arrowHeadPulse {
+            0%, 100% {
+                opacity: 0.6;
+                transform: translateY(-50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1.2);
+            }
+        }
+        
+        /* Animation Styles */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .animate-on-scroll.animate-fade-up {
+            transform: translateY(30px);
+        }
+        
+        .animate-on-scroll.animate-fade-left {
+            transform: translateX(-30px);
+        }
+        
+        .animate-on-scroll.animate-fade-right {
+            transform: translateX(30px);
+        }
+        
+        .animate-on-scroll.animate-scale {
+            transform: scale(0.9);
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+        
+        /* Staggered Animation Delays */
+        .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+        .animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+        .animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+        .animate-on-scroll:nth-child(4) { transition-delay: 0.4s; }
+        .animate-on-scroll:nth-child(5) { transition-delay: 0.5s; }
+        .animate-on-scroll:nth-child(6) { transition-delay: 0.6s; }
+        
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll {
+                transition: none;
+            }
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .hero-content {
@@ -1101,6 +1238,12 @@
                 grid-template-columns: 1fr;
                 gap: 40px;
                 padding: 0 10px;
+            }
+            
+            /* Hide arrows on mobile since cards stack vertically */
+            .step-card:nth-child(1)::after,
+            .step-card:nth-child(2)::after {
+                display: none;
             }
 
             .step-card {
@@ -1204,7 +1347,7 @@ curl -X POST "https://api.valkyrie.dev/job/start" \<br>
     </section>
 
     <!-- Problem Section -->
-    <section class="problem section">
+    <section class="problem section animate-on-scroll animate-fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>The Infrastructure Tax That's Killing Innovation</h2>
@@ -1232,7 +1375,7 @@ curl -X POST "https://api.valkyrie.dev/job/start" \<br>
     </section>
 
     <!-- Timeline -->
-    <section class="timeline section" id="how-it-works">
+    <section class="timeline section animate-on-scroll animate-fade-up" id="how-it-works">
         <div class="container">
             <div class="section-header">
                 <p class="section-pre-header">From API call to results—without the chaos</p>
@@ -1266,7 +1409,7 @@ curl -X POST "https://api.valkyrie.dev/job/start" \<br>
     </section>
 
     <!-- Features Grid -->
-    <section class="features section" id="features">
+    <section class="features section animate-on-scroll animate-fade-up" id="features">
         <div class="container">
             <div class="section-header">
                 <p class="section-pre-header">What You Can Run</p>
@@ -1275,32 +1418,32 @@ curl -X POST "https://api.valkyrie.dev/job/start" \<br>
             </div>
             
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card animate-on-scroll animate-fade-up">
                     <span class="material-icons feature-icon">smart_toy</span>
                     <h3>Ollama (LLMs)</h3>
                     <p>Chat, analysis, agents, custom apps</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card animate-on-scroll animate-fade-up">
                     <span class="material-icons feature-icon">bolt</span>
                     <h3>Unsloth (Fine‑tuning)</h3>
                     <p>Efficient training on your data</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card animate-on-scroll animate-fade-up">
                     <span class="material-icons feature-icon">image</span>
                     <h3>Flux (Images)</h3>
                     <p>Inpainting, outpainting, generative design</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card animate-on-scroll animate-fade-up">
                     <span class="material-icons feature-icon">video_library</span>
                     <h3>WAN 2.2 (Video)</h3>
                     <p>AI‑driven video generation</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card animate-on-scroll animate-fade-up">
                     <span class="material-icons feature-icon">code</span>
                     <h3>Qwen‑Code</h3>
                     <p>"Vibe coding" for accelerated development</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card animate-on-scroll animate-fade-up">
                     <span class="material-icons feature-icon">build</span>
                     <h3>Bring Your Own</h3>
                     <p>Any Python/Unix script, model, or batch job</p>
@@ -1310,7 +1453,7 @@ curl -X POST "https://api.valkyrie.dev/job/start" \<br>
     </section>
 
     <!-- Use Case Section -->
-    <section class="use-case section">
+    <section class="use-case section animate-on-scroll animate-fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>Built For: Engineering Teams Running Predictive Models</h2>
@@ -1319,7 +1462,7 @@ curl -X POST "https://api.valkyrie.dev/job/start" \<br>
             
             <div class="transformation-flow">
                 <!-- Step 1: What You Bring -->
-                <div class="step-card step-1">
+                <div class="step-card step-1 animate-on-scroll animate-fade-left">
                     <div class="step-number">1</div>
                     <h3 class="step-title">What You Bring</h3>
                     <div class="step-content">
@@ -1339,7 +1482,7 @@ curl -X POST "https://api.valkyrie.dev/job/start" \<br>
                 </div>
                 
                 <!-- Step 2: What Valkyrie Does -->
-                <div class="step-card step-2">
+                <div class="step-card step-2 animate-on-scroll animate-fade-up">
                     <div class="step-number">2</div>
                     <h3 class="step-title">What Valkyrie Does</h3>
                     <div class="step-content">
@@ -1360,10 +1503,10 @@ curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
                             <div class="provider-text">Auto-selects optimal provider:</div>
                             <div class="provider-logos">
                                 <svg class="provider-logo" viewBox="0 0 100 50" fill="white" opacity="0.7">
-                                    <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="14" font-weight="bold">AWS</text>
+                                    <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="18" font-weight="bold">AWS</text>
                                 </svg>
                                 <svg class="provider-logo" viewBox="0 0 100 50" fill="white" opacity="0.7">
-                                    <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="14" font-weight="bold">GCP</text>
+                                    <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="18" font-weight="bold">GCP</text>
                                 </svg>
                                 <svg class="provider-logo" viewBox="0 0 100 50" fill="white" opacity="0.7">
                                     <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="12" font-weight="bold">Azure</text>
@@ -1374,7 +1517,7 @@ curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
                 </div>
                 
                 <!-- Step 3: What You Get Back -->
-                <div class="step-card step-3">
+                <div class="step-card step-3 animate-on-scroll animate-fade-right">
                     <div class="step-number">3</div>
                     <h3 class="step-title">What You Get Back</h3>
                     <div class="step-content">
@@ -1411,7 +1554,7 @@ curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
     </section>
 
     <!-- Business Value Section -->
-    <section class="business-value section">
+    <section class="business-value section animate-on-scroll animate-fade-up">
         <div class="container">
             <div class="section-header">
                 <p class="section-pre-header">Outcomes That Matter</p>
@@ -1445,7 +1588,7 @@ curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
     </section>
 
     <!-- Security Section -->
-    <section class="security section" id="security">
+    <section class="security section animate-on-scroll animate-fade-up" id="security">
         <div class="container">
             <div class="section-header">
                 <p class="section-pre-header">Security & Compliance</p>
@@ -1454,32 +1597,32 @@ curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
             </div>
             
             <div class="security-grid">
-                <div class="security-card">
+                <div class="security-card animate-on-scroll animate-fade-up">
                     <span class="material-icons security-icon">shield</span>
                     <h3>Data Privacy First</h3>
                     <p>Customer data is never stored beyond job lifecycle. Fully abstracted and isolated workloads. Complete control over your proprietary information.</p>
                 </div>
-                <div class="security-card">
+                <div class="security-card animate-on-scroll animate-fade-up">
                     <span class="material-icons security-icon">gavel</span>
                     <h3>GDPR & Global Compliance</h3>
                     <p>Built-in data handling policies aligned with GDPR and international privacy regulations. Process sensitive data with complete confidence.</p>
                 </div>
-                <div class="security-card">
+                <div class="security-card animate-on-scroll animate-fade-up">
                     <span class="material-icons security-icon">cloud_off</span>
                     <h3>Ephemeral & Isolated</h3>
                     <p>Every compute instance is provisioned into an isolated environment. Automatic termination and data wiping when jobs complete.</p>
                 </div>
-                <div class="security-card">
+                <div class="security-card animate-on-scroll animate-fade-up">
                     <span class="material-icons security-icon">groups</span>
                     <h3>Role-Based Access Control</h3>
                     <p>Fine-grained permissions ensure only authorized users and teams can access specific resources or endpoints.</p>
                 </div>
-                <div class="security-card">
+                <div class="security-card animate-on-scroll animate-fade-up">
                     <span class="material-icons security-icon">https</span>
                     <h3>Encrypted Communications</h3>
                     <p>All API requests secured with modern encryption protocols (TLS 1.2+). Support for both API keys and JWT tokens.</p>
                 </div>
-                <div class="security-card">
+                <div class="security-card animate-on-scroll animate-fade-up">
                     <span class="material-icons security-icon">assessment</span>
                     <h3>Audit Trail</h3>
                     <p>Detailed usage logs and wallet-based billing provide transparent records for internal governance and compliance reviews.</p>
@@ -1489,7 +1632,7 @@ curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
     </section>
 
     <!-- Comparison Table -->
-    <section class="comparison section">
+    <section class="comparison section animate-on-scroll animate-fade-up">
         <div class="container">
             <div class="section-header">
                 <p class="section-pre-header">More Control, Less Friction</p>
@@ -1551,7 +1694,7 @@ curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
     </section>
 
     <!-- Pricing -->
-    <section class="pricing section" id="pricing">
+    <section class="pricing section animate-on-scroll animate-fade-up" id="pricing">
         <div class="container">
             <div class="section-header">
                 <p class="section-pre-header">Early Access for teams ready to build</p>
@@ -1585,7 +1728,7 @@ curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
     </section>
 
     <!-- Final CTA -->
-    <section class="final-cta section" id="early-access">
+    <section class="final-cta section animate-on-scroll animate-scale" id="early-access">
         <div class="container">
             <h2>Run any model. On any machine.<br>With zero infrastructure drama.</h2>
             <div style="margin-top: 40px;">
@@ -1596,7 +1739,7 @@ curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
     </section>
 
     <!-- FAQs -->
-    <section class="faqs section">
+    <section class="faqs section animate-on-scroll animate-fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>Frequently Asked Questions</h2>
@@ -1655,5 +1798,32 @@ curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
             </div>
         </div>
     </section>
+
+    <script>
+        // Intersection Observer for scroll animations
+        function initScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Optionally unobserve the element once it's been animated
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Initialize animations when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initScrollAnimations);
+    </script>
 </body>
 </html>
