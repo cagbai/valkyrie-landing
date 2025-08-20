@@ -1,0 +1,12 @@
+{
+  "name": "valkyrie-landing",
+  "version": "1.0.0",
+  "description": "Valkyrie by Azumo - Infinite Compute, On Demand",
+  "scripts": {
+    "dev": "npx serve .",
+    "preview": "npx serve ."
+  },
+  "keywords": ["valkyrie", "azumo", "compute", "ai", "infrastructure"],
+  "author": "Azumo",
+  "license": "MIT"
+}

@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valkyrie by Azumo - Infinite Compute, On Demand</title>
+    
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Primary Colors */
+            --deep-navy: #0a0b14;
+            --dark-purple: #0f1019;
+            --indigo: #1e1b4b;
+            --purple: #312e81;
+            
+            /* Accent Colors */
+            --primary-purple: #4f46e5;
+            --secondary-purple: #7c3aed;
+            --darker-purple: #4338ca;
+            
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --text-subtle: rgba(255, 255, 255, 0.6);
+            
+            /* Surface Colors */
+            --glass-light: rgba(255, 255, 255, 0.05);
+            --glass-medium: rgba(255, 255, 255, 0.1);
+            --glass-dark: rgba(255, 255, 255, 0.03);
+            --code-bg: rgba(0, 0, 0, 0.3);
+            --code-bg-dark: rgba(0, 0, 0, 0.4);
+            
+            /* Status Colors */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--deep-navy);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 11, 20, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-medium);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .nav-logo {
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1;
+        }
+        .nav-logo .brand-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-logo .brand-sub {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-top: 2px;
+            margin-left: 32px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-purple);
+        }
+
+        .nav-cta {
+            background: var(--primary-purple);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--darker-purple);
+            transform: translateY(-1px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--indigo) 50%, var(--purple) 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 64px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(79, 70, 229, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text {
+            max-width: 700px;
+        }
+
+        .pre-header {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 19px;
+            font-weight: 400;
+        }
+        
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 26px;
+            line-height: 1.05;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .intro-text {
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            margin-bottom: 13px;
+            font-weight: 500;
+        }
+        
+        .hero .description {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 38px;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--secondary-purple) 100%);
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 12px 40px rgba(79, 70, 229, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 50px rgba(79, 70, 229, 0.5);
+        }
+        
+        .btn-secondary {
+            background: var(--glass-medium);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 20px 40px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            background: var(--glass-light);
+            border: 1px solid var(--glass-medium);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.5), transparent);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot:nth-child(1) { background: var(--error); }
+        .terminal-dot:nth-child(2) { background: var(--warning); }
+        .terminal-dot:nth-child(3) { background: var(--success); }
+
+        .code-block {
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .code-block code {
+            color: var(--success);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .status-indicators {
+            display: grid;
+            gap: 12px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--glass-light);
+            border-radius: 8px;
+            border-left: 3px solid var(--success);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Problem Section */
+        .problem {
+            background: var(--dark-purple);
+            position: relative;
+        }
+
+        .problem::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-medium), transparent);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-pre-header {
+            color: var(--primary-purple);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+        
+        .problem-card {
+            background: var(--glass-dark);
+            border: 1px solid var(--glass-medium);
+            padding: 40px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--error), transparent);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(239, 68, 68, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .problem-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            margin-top: 20px;
+        }
+
+        .problem-icon {
+            font-size: 3rem;
+            color: var(--error);
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .problem-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        /* Features Grid */
+        .features {
+            background: var(--deep-navy);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: var(--glass-dark);
+            border: 1px solid var(--glass-medium);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-purple), transparent);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(79, 70, 229, 0.3);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-purple);
+            margin: 0 auto 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            background: var(--dark-purple);
+        }
+
+        .timeline-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .timeline-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .timeline-step::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            right: -20px;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-purple), transparent);
+        }
+
+        .timeline-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin: 0 auto 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-step h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .timeline-step p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Use Case Section */
+        .use-case {
+            background: var(--deep-navy);
+        }
+
+        /* 3-Step Transformation Layout */
+        .transformation-flow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            align-items: stretch;
+            margin-top: 80px;
+            padding: 0 20px;
+        }
+
+        .step-card {
+            background: var(--glass-dark);
+            border: 1px solid var(--glass-medium);
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            min-height: 580px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .step-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0 auto 24px;
+            color: white;
+        }
+
+        .step-1 .step-number {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .step-2 .step-number {
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+        }
+
+        .step-3 .step-number {
+            background: linear-gradient(135deg, var(--success), #059669);
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .step-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-item {
+            padding: 14px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .input-item strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 3px;
+            font-size: 0.95rem;
+        }
+
+        .input-item span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.3;
+        }
+
+        .output-item {
+            padding: 14px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+
+        .output-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .output-content {
+            text-align: left;
+        }
+
+        .output-item:nth-child(1) { 
+            background: linear-gradient(135deg, var(--success), #059669);
+        }
+        .output-item:nth-child(2) { 
+            background: linear-gradient(135deg, var(--primary-purple), var(--darker-purple));
+        }
+        .output-item:nth-child(3) { 
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .process-step {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .code-demo {
+            background: var(--code-bg-dark);
+            border: 1px solid var(--glass-medium);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: left;
+            width: 100%;
+            flex-shrink: 0;
+        }
+        
+        .code-demo code {
+            color: var(--success);
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .provider-section {
+            margin-top: 16px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .provider-logos {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .provider-logo {
+            width: 45px;
+            height: 22px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .provider-logo:hover {
+            opacity: 1;
+        }
+
+        .provider-text {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+
+        .flow-arrow {
+            color: var(--primary-purple);
+            font-size: 2rem;
+            opacity: 0.6;
+        }
+
+        .use-case-footer {
+            margin-top: 80px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        /* Business Value Section */
+        .business-value {
+            background: var(--dark-purple);
+            position: relative;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .stat-card {
+            background: var(--glass-dark);
+            border: 1px solid var(--glass-medium);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-purple), var(--secondary-purple));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.1);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .stat-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .stat-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Security Section */
+        .security {
+            background: var(--dark-purple);
+        }
+        
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-top: 60px;
+        }
+        
+        .security-card {
+            padding: 32px;
+            background: rgba(16, 185, 129, 0.03);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .security-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--success), transparent);
+        }
+
+        .security-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.1);
+        }
+        
+        .security-icon {
+            font-size: 3rem;
+            color: var(--success);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .security-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--success);
+            margin-top: 20px;
+        }
+        
+        .security-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Comparison Table */
+        .comparison {
+            background: var(--deep-navy);
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+            margin: 60px 0;
+            border-radius: 16px;
+            border: 1px solid var(--glass-medium);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        th, td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-medium);
+        }
+
+        th {
+            background: rgba(79, 70, 229, 0.1);
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1px solid rgba(79, 70, 229, 0.3);
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        td:last-child {
+            background: rgba(16, 185, 129, 0.1);
+            font-weight: 600;
+            color: var(--success);
+            border-left: 2px solid var(--success);
+        }
+
+        /* Pricing */
+        .pricing {
+            background: var(--dark-purple);
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: var(--glass-dark);
+            border: 1px solid var(--glass-medium);
+            padding: 40px;
+            border-radius: 16px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-purple), transparent);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(79, 70, 229, 0.3);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.1);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .pricing-card .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-size: 1rem;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .pricing-card li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 24px;
+            font-size: 0.95rem;
+        }
+
+        .pricing-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        /* Final CTA */
+        .final-cta {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--purple) 50%, var(--primary-purple) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .final-cta .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .final-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+        
+        .final-cta .microcopy {
+            margin-top: 32px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .btn-white {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--indigo);
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-right: 16px;
+        }
+        
+        .btn-white:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(255, 255, 255, 0.2);
+        }
+
+        /* FAQs */
+        .faqs {
+            background: var(--deep-navy);
+        }
+
+        .faq-accordion {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--glass-medium);
+            margin-bottom: 24px;
+        }
+
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            cursor: pointer;
+            padding: 20px 0;
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-purple);
+        }
+
+        .faq-answer {
+            color: var(--text-muted);
+            padding-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        /* Cloud provider logos */
+        .cloud-logos {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .cloud-logo {
+            width: 80px;
+            height: 40px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .cloud-logo:hover {
+            opacity: 1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                justify-content: center;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+
+            .transformation-flow {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 0 10px;
+            }
+
+            .step-card {
+                height: auto;
+                min-height: 400px;
+                padding: 40px 30px;
+            }
+
+            .timeline-container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .timeline-step::after {
+                display: none;
+            }
+
+            .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="brand-name">⚡ Valkyrie</div>
+                <div class="brand-sub">by Azumo</div>
+            </a>
+            <div class="nav-menu">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How it Works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#security">Security</a>
+            </div>
+            <a href="#early-access" class="nav-cta">Get Early Access</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <p class="pre-header">Run any AI model, any script, any workflow—without the infrastructure headache</p>
+                    <h1>Infinite Compute, On‑Demand.</h1>
+                    <p class="intro-text">Introducing Valkyrie by Azumo.</p>
+                    <p class="description">Valkyrie by Azumo eliminates the biggest barrier to AI innovation: accessing scalable, optimized compute. Deploy LLMs, fine-tune models, generate content, or run custom workloads with a single API call.</p>
+                    <div class="cta-buttons">
+                        <a href="https://azumo.com/get-in-touch" class="btn-primary">Request Early Access</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="terminal-header">
+                        <div class="terminal-dot"></div>
+                        <div class="terminal-dot"></div>
+                        <div class="terminal-dot"></div>
+                    </div>
+                    <div class="code-block">
+                        <code>
+curl -X POST "https://api.valkyrie.dev/job/start" \<br>
+  -H "X-API-Key: $YOUR_KEY" \<br>
+  -d '{"script": "python train_model.py"}'
+                        </code>
+                    </div>
+                    <div class="status-indicators">
+                        <div class="status-item">
+                            <div class="status-dot"></div>
+                            <span>⚡ Provisioning optimal compute...</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot"></div>
+                            <span>🚀 Job executing on best-fit hardware</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot"></div>
+                            <span>✅ Results ready • Environment cleaned</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Infrastructure Tax That's Killing Innovation</h2>
+                <p>Your team has brilliant ideas. Your models are ready. But you're stuck wrestling with GPU provisioning, environment setup, and cloud complexity instead of building what matters.</p>
+            </div>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <span class="material-icons problem-icon">schedule</span>
+                    <h3>Weeks Lost to Setup</h3>
+                    <p>Hunt for GPUs across providers. Debug environments that break in production. Fight fragile APIs and unclear errors. Your competitive advantage dies waiting for infrastructure.</p>
+                </div>
+                <div class="problem-card">
+                    <span class="material-icons problem-icon">money_off</span>
+                    <h3>Bleeding Money on Idle Resources</h3>
+                    <p>Pay for clusters that sit unused. Overprovision for traffic spikes. Watch bills spiral while idle resources burn cash and you're still wrestling with basic setup.</p>
+                </div>
+                <div class="problem-card">
+                    <span class="material-icons problem-icon">engineering</span>
+                    <h3>Engineering Talent Wasted</h3>
+                    <p>Your best developers become reluctant DevOps engineers. Security reviews slow every new tool addition. They're fixing infrastructure instead of solving problems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="timeline section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-pre-header">From API call to results—without the chaos</p>
+                <h2>How Valkyrie Works</h2>
+                <p>You bring scripts, models, and data. Valkyrie provisions best‑fit compute (e.g., Vast.ai, RunPod, Hetzner, and others), manages dependencies, reports status clearly, and tears down cleanly when done.</p>
+            </div>
+            
+            <div class="timeline-container">
+                <div class="timeline-step">
+                    <div class="step-number">1</div>
+                    <h3>Submit</h3>
+                    <p>Call a resilient REST endpoint with your job, artifacts, and params.</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-number">2</div>
+                    <h3>Orchestrate</h3>
+                    <p>Valkyrie provisions compute, installs requirements, loads models.</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-number">3</div>
+                    <h3>Run & Report</h3>
+                    <p>Status‑aware endpoints (queued, spinning up, loading, running, complete) with retries and reconciliation.</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-number">4</div>
+                    <h3>Deliver & Clean Up</h3>
+                    <p>Retrieve outputs or write to S3/GCS/Azure; environments auto‑terminate and are wiped.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="features section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-pre-header">What You Can Run</p>
+                <h2>One platform. Many possibilities.</h2>
+                <p>Use pre‑configured tools out of the box—or bring your own. If it's a script, Valkyrie will run it cleanly and at scale.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="material-icons feature-icon">smart_toy</span>
+                    <h3>Ollama (LLMs)</h3>
+                    <p>Chat, analysis, agents, custom apps</p>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons feature-icon">bolt</span>
+                    <h3>Unsloth (Fine‑tuning)</h3>
+                    <p>Efficient training on your data</p>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons feature-icon">image</span>
+                    <h3>Flux (Images)</h3>
+                    <p>Inpainting, outpainting, generative design</p>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons feature-icon">video_library</span>
+                    <h3>WAN 2.2 (Video)</h3>
+                    <p>AI‑driven video generation</p>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons feature-icon">code</span>
+                    <h3>Qwen‑Code</h3>
+                    <p>"Vibe coding" for accelerated development</p>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons feature-icon">build</span>
+                    <h3>Bring Your Own</h3>
+                    <p>Any Python/Unix script, model, or batch job</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Case Section -->
+    <section class="use-case section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Built For: Engineering Teams Running Predictive Models</h2>
+                <p>You've trained models. You need to run them at scale. Here's what that looks like when infrastructure isn't your problem.</p>
+            </div>
+            
+            <div class="transformation-flow">
+                <!-- Step 1: What You Bring -->
+                <div class="step-card step-1">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">What You Bring</h3>
+                    <div class="step-content">
+                        <div class="input-item">
+                            <strong>Your Model:</strong>
+                            <span>Trained XGBoost for pipeline flow prediction</span>
+                        </div>
+                        <div class="input-item">
+                            <strong>Your Data:</strong>
+                            <span>CSV with thousands of scenarios to simulate</span>
+                        </div>
+                        <div class="input-item">
+                            <strong>Your Script:</strong>
+                            <span>Simple Python runner for batch predictions</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2: What Valkyrie Does -->
+                <div class="step-card step-2">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">What Valkyrie Does</h3>
+                    <div class="step-content">
+                        <div class="code-demo">
+                            <code>
+curl -X POST "https://api.valkyrie.dev/instance/job/start" \<br>
+-H "X-API-Key: $YOUR_KEY" \<br>
+-d '{<br>
+&nbsp;&nbsp;"cluster_name": "pipeline-predictions",<br>
+&nbsp;&nbsp;"workdir": "~/models/pipeline_sim",<br>
+&nbsp;&nbsp;"script": "python run_predictions.py --model model.json --data scenarios.csv"<br>
+}'<br><br>
+<span style="color: #10b981;"># Valkyrie handles: provisioning → execution → cleanup</span>
+                            </code>
+                        </div>
+                        
+                        <div class="provider-section">
+                            <div class="provider-text">Auto-selects optimal provider:</div>
+                            <div class="provider-logos">
+                                <svg class="provider-logo" viewBox="0 0 100 50" fill="white" opacity="0.7">
+                                    <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="14" font-weight="bold">AWS</text>
+                                </svg>
+                                <svg class="provider-logo" viewBox="0 0 100 50" fill="white" opacity="0.7">
+                                    <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="14" font-weight="bold">GCP</text>
+                                </svg>
+                                <svg class="provider-logo" viewBox="0 0 100 50" fill="white" opacity="0.7">
+                                    <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="12" font-weight="bold">Azure</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: What You Get Back -->
+                <div class="step-card step-3">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">What You Get Back</h3>
+                    <div class="step-content">
+                        <div class="output-item">
+                            <span class="material-icons output-icon">trending_up</span>
+                            <div class="output-content">
+                                <strong>Predictions CSV</strong><br>
+                                <span style="opacity: 0.9; font-size: 0.9rem;">Flow rates for every scenario</span>
+                            </div>
+                        </div>
+                        <div class="output-item">
+                            <span class="material-icons output-icon">schedule</span>
+                            <div class="output-content">
+                                <strong>Minutes, Not Weeks</strong><br>
+                                <span style="opacity: 0.9; font-size: 0.9rem;">No infrastructure setup</span>
+                            </div>
+                        </div>
+                        <div class="output-item">
+                            <span class="material-icons output-icon">savings</span>
+                            <div class="output-content">
+                                <strong>Pay Per Use</strong><br>
+                                <span style="opacity: 0.9; font-size: 0.9rem;">No idle cluster costs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="use-case-footer">
+                <h4 style="margin-bottom: 16px; font-size: 1.3rem; color: var(--text-primary);">Perfect for: Infrastructure Planning • Design Optimization • Risk Assessment</h4>
+                <p style="color: var(--text-secondary); font-size: 1rem;">Run thousands of "what-if" scenarios without becoming a cloud expert. Focus on engineering decisions, not infrastructure management.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Value Section -->
+    <section class="business-value section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-pre-header">Outcomes That Matter</p>
+                <h2>Make infrastructure invisible. Make progress inevitable.</h2>
+                <p>Valkyrie compresses time‑to‑impact while keeping spend predictable and operations auditable.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="material-icons stat-icon">rocket_launch</span>
+                    <h3>Faster Innovation</h3>
+                    <p>No more days lost configuring GPUs. Valkyrie provisions, runs, and scales compute in minutes so your team can focus on building, not setup.</p>
+                </div>
+                <div class="stat-card">
+                    <span class="material-icons stat-icon">savings</span>
+                    <h3>Cost-Efficient by Design</h3>
+                    <p>Automatic optimization across multiple providers. Auto-termination of idle clusters. Pay only for what you use, when you use it.</p>
+                </div>
+                <div class="stat-card">
+                    <span class="material-icons stat-icon">verified</span>
+                    <h3>Enterprise-Grade Reliability</h3>
+                    <p>Auto-scaling, GPU fallback, intelligent job scheduling, and robust authentication. Built for production from day one.</p>
+                </div>
+                <div class="stat-card">
+                    <span class="material-icons stat-icon">api</span>
+                    <h3>Simple Integration</h3>
+                    <p>Intuitive REST APIs designed for resilience. Clear status reporting when models load, clusters spin up, or jobs execute.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section class="security section" id="security">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-pre-header">Security & Compliance</p>
+                <h2>Designed for privacy, auditability, and control</h2>
+                <p>Trust is foundational. Valkyrie bakes in controls that protect data, simplify reviews, and meet enterprise expectations—without slowing teams down.</p>
+            </div>
+            
+            <div class="security-grid">
+                <div class="security-card">
+                    <span class="material-icons security-icon">shield</span>
+                    <h3>Data Privacy First</h3>
+                    <p>Customer data is never stored beyond job lifecycle. Fully abstracted and isolated workloads. Complete control over your proprietary information.</p>
+                </div>
+                <div class="security-card">
+                    <span class="material-icons security-icon">gavel</span>
+                    <h3>GDPR & Global Compliance</h3>
+                    <p>Built-in data handling policies aligned with GDPR and international privacy regulations. Process sensitive data with complete confidence.</p>
+                </div>
+                <div class="security-card">
+                    <span class="material-icons security-icon">cloud_off</span>
+                    <h3>Ephemeral & Isolated</h3>
+                    <p>Every compute instance is provisioned into an isolated environment. Automatic termination and data wiping when jobs complete.</p>
+                </div>
+                <div class="security-card">
+                    <span class="material-icons security-icon">groups</span>
+                    <h3>Role-Based Access Control</h3>
+                    <p>Fine-grained permissions ensure only authorized users and teams can access specific resources or endpoints.</p>
+                </div>
+                <div class="security-card">
+                    <span class="material-icons security-icon">https</span>
+                    <h3>Encrypted Communications</h3>
+                    <p>All API requests secured with modern encryption protocols (TLS 1.2+). Support for both API keys and JWT tokens.</p>
+                </div>
+                <div class="security-card">
+                    <span class="material-icons security-icon">assessment</span>
+                    <h3>Audit Trail</h3>
+                    <p>Detailed usage logs and wallet-based billing provide transparent records for internal governance and compliance reviews.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="comparison section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-pre-header">More Control, Less Friction</p>
+                <h2>Better than DIY, more portable than single‑cloud</h2>
+                <p>DIY gives control but drains time. Single‑cloud is convenient until capacity or pricing shifts. Valkyrie is a unified execution fabric that's cost‑smart and portable.</p>
+            </div>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>DIY Orchestration</th>
+                            <th>Single‑Cloud Runner</th>
+                            <th>Valkyrie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Provisioning & Scale</strong></td>
+                            <td>Slow, manual</td>
+                            <td>Easy until capacity/pricing shifts</td>
+                            <td>Dynamic across providers</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cost Control</strong></td>
+                            <td>Idle burn common</td>
+                            <td>Vendor‑dependent</td>
+                            <td>Auto‑optimize + scale‑to‑zero</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Portability</strong></td>
+                            <td>High effort</td>
+                            <td>Low</td>
+                            <td>High (open‑weight friendly)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reliability</strong></td>
+                            <td>Brittle under growth</td>
+                            <td>Varies by region/stock</td>
+                            <td>Retries, reconciliation, failover</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Security & Audits</strong></td>
+                            <td>Build it yourself</td>
+                            <td>Mixed</td>
+                            <td>Ephemeral, RBAC, audit logs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dev Speed</strong></td>
+                            <td>Weeks to stable</td>
+                            <td>Days</td>
+                            <td>Minutes to first output</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing section" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-pre-header">Early Access for teams ready to build</p>
+                <h2>How To Get Started</h2>
+                <p>We're partnering with select teams to shape the roadmap in real environments. Access is commitment‑light and outcome‑focused.</p>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Builder Teams</h3>
+                    <p class="subtitle">For engineering‑led POCs and first production jobs</p>
+                    <ul>
+                        <li>Core platform access</li>
+                        <li>Pre‑configured tools (Ollama, Unsloth, Flux, WAN 2.2, Qwen‑Code)</li>
+                        <li>Email support, usage & cost visibility</li>
+                    </ul>
+                    <a href="https://azumo.com/get-in-touch" class="btn-primary">Request Access</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Scale & Enterprise</h3>
+                    <p class="subtitle">For regulated, high‑throughput, or multi‑team workloads</p>
+                    <ul>
+                        <li>RBAC, audit logs, wallet‑based billing</li>
+                        <li>SSO/SAML (roadmap), VPC options (where applicable)</li>
+                        <li>Priority support, roadmap influence</li>
+                    </ul>
+                    <a href="https://azumo.com/get-in-touch" class="btn-primary">Schedule a Call</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta section" id="early-access">
+        <div class="container">
+            <h2>Run any model. On any machine.<br>With zero infrastructure drama.</h2>
+            <div style="margin-top: 40px;">
+                <a href="https://azumo.com/get-in-touch" class="btn-white">Get Early Access</a>
+                <a href="https://azumo.com/get-in-touch" class="btn-secondary">Talk to an Engineer</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="faqs section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <div class="faq-question">What types of models and workloads can I run on Valkyrie?</div>
+                    <div class="faq-answer">Valkyrie can execute any script or model that runs in a containerized environment. This includes XGBoost, scikit-learn, PyTorch, TensorFlow models, custom Python/R scripts, data processing pipelines, and even non-ML workloads like simulations or batch analytics. If it runs on Linux, it runs on Valkyrie.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How does pricing work? Am I paying for idle time?</div>
+                    <div class="faq-answer">You only pay for actual compute time when your jobs are running. Valkyrie automatically terminates idle clusters, so there are no surprise bills from forgotten instances. Pricing is transparent and usage-based—you're billed per minute of actual execution time across our provider network.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Where does my data go? Can I control data residency?</div>
+                    <div class="faq-answer">Your data never leaves the isolated compute environment during job execution. All instances are ephemeral—completely wiped after job completion. For enterprise customers, we support deployment in your own cloud environment for complete data sovereignty and compliance with regional requirements.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What happens if a job fails or gets interrupted?</div>
+                    <div class="faq-answer">Valkyrie includes intelligent retry logic and reconciliation. If hardware fails, we automatically migrate your job to available resources. You get clear status reporting (queued, spinning up, running, failed, complete) so you always know what's happening. Failed jobs can be easily restarted without losing progress.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I get my results back?</div>
+                    <div class="faq-answer">Results can be retrieved directly through the API, automatically uploaded to your S3/GCS/Azure storage, or accessed through our secure download endpoints. You choose the method that fits your workflow—whether that's polling for completion or setting up webhooks for notifications.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Is this just another wrapper around AWS/GCP?</div>
+                    <div class="faq-answer">No. Valkyrie intelligently orchestrates across multiple providers (Vast.ai, RunPod, Hetzner, and others) to find the best price-performance for your specific workload. We handle provider failures, optimize routing, and abstract away the complexity of managing multiple cloud relationships.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How quickly can I get started?</div>
+                    <div class="faq-answer">If you have a working script and model, you can submit your first job within minutes of getting API access. No lengthy onboarding, no infrastructure setup, no DevOps expertise required. Our early access program includes direct support to help you optimize your first workflows.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What about security and compliance? Can I get SOC 2?</div>
+                    <div class="faq-answer">Valkyrie is built with enterprise-grade security from day one. We support GDPR compliance, provide detailed audit logs, use encrypted communications (TLS 1.2+), and offer role-based access control. SOC 2 certification is on our roadmap for enterprise customers.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I integrate this with my existing MLOps pipeline?</div>
+                    <div class="faq-answer">Yes. Valkyrie's REST API integrates seamlessly with existing tools like Airflow, Kubeflow, MLflow, or custom orchestration systems. You can treat Valkyrie as a compute backend that plugs into your current workflow without disrupting your established processes.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What if I need specialized hardware or custom environments?</div>
+                    <div class="faq-answer">Valkyrie automatically selects optimal hardware for your workload, including GPU-accelerated instances when needed. For custom environment requirements, you can specify dependencies in your job submission. Enterprise customers can work with us to pre-configure specialized environments for recurring use cases.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
